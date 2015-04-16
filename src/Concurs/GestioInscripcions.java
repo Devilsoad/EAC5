@@ -12,23 +12,4 @@ package Concurs;
 public class GestioInscripcions {
     
 }
-Hola caracolafsdfdsfdgfdgdfvbfdfbdf
-djsdfkñwdñkfn w
-sdf
-gfve
-gv
-evbgqe
-b
-e
-bqe
-b
-
-eq
-g
-re
-
-
-re
-ger
-bg
-eg
+Hola gent
