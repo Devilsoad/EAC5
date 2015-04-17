@@ -1,10 +1,9 @@
 package Radio;
 
 import java.util.Scanner;
-
 /**
  *
- * @author Jose
+ * @author Jose, Llorenç, Silvia
  */
 public class Principal {
     public static void main(String[] args) {
@@ -17,7 +16,7 @@ public class Principal {
         int opcio = 0;
         boolean correcte = false;
         System.out.println("===================================\n"
-                + "Benvinguts al concurs de Ràdio IOC\n"
+                + "Benvinguts al concurs de Radio IOC\n"
                 + "===================================\n"
                 + "Es troba al menu principal, pot escollir entre aquestes"
                 + " dues opcions\n"
@@ -142,8 +141,6 @@ public class Principal {
             default:
                 
             break;
-        }
-      
-    }
-    
+        }    
+    }   
 }
