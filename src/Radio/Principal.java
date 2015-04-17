@@ -7,7 +7,11 @@ import java.util.Scanner;
  * @author Jose
  */
 public class Principal {
-    
+    public static void main(String[] args) {
+        
+        Principal programa = new Principal();
+        programa.inici();                
+    }   
     public void inici() {
        Scanner lector = new Scanner(System.in);
         int opcio = 0;
