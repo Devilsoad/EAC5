@@ -46,7 +46,7 @@ public class varis {
     String nom, cognom, DNI, telefon, puntuacio, capcalera, mostrarDades, continuar;;
     public static void main(String[] args) {
         
-        ProvaEAC5 programa = new ProvaEAC5();
+        varis programa = new varis();
         programa.inici();                
     }   
     /**
