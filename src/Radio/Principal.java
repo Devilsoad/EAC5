@@ -1,12 +1,13 @@
 package Radio;
 
-import static Radio.varis.MAXIM_CONCURSANTS;
 import java.util.Scanner;
 /**
  *
  * @author Jose, Llorenç, Silvia
  */
 public class Principal {
+    // Creació d'una instància de DadesConcurs
+    DadesConcurs dadesConcurs = new DadesConcurs();
     /**
      * Nombre maxim de concursants
      */
