@@ -1,6 +1,6 @@
 package Radio;
 
-import static Radio.dadesConcursants.MAXIM_CONCURSANTS;
+import static Radio.DadesConcursants.MAXIM_CONCURSANTS;
 import java.util.Scanner;
 /**
  *
@@ -10,6 +10,7 @@ public class Principal {
     // Creació d'una instància de DadesConcurs
     DadesConcurs dadesConcurs = new DadesConcurs();
     String nom, cognom, DNI, telefon, puntuacio, capcalera, mostrarDades, continuar;
+    Inscripcions inscripcions = new Inscripcions();
     
     public static void main(String[] args) {
         
@@ -82,7 +83,7 @@ public class Principal {
         }
         switch(opcio){
             case 1:
-                
+            inscripcions.inici();   
             break;
             case 2:
           
