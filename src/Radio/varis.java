@@ -455,9 +455,6 @@ public class varis {
     }
   
     
-    
-    
-    
     //LLISTES
     
     public void llistatConcursants(){

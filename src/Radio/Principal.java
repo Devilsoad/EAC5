@@ -1,6 +1,6 @@
 package Radio;
 
-import static Radio.DadesConcursants.MAXIM_CONCURSANTS;
+import static Radio.Inscripcions.MAXIM_CONCURSANTS;
 import java.util.Scanner;
 /**
  *
@@ -83,7 +83,7 @@ public class Principal {
         }
         switch(opcio){
             case 1:
-            inscripcions.inici();   
+            inscripcions.arrayCaptura();   
             break;
             case 2:
           
