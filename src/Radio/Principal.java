@@ -161,7 +161,7 @@ public class Principal {
     public void formatLlistaTwitter(){
         String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
         String [] arrayMostrar = new String [MAXIM_CONCURSANTS];
-        dadesParticipants = arrayCaptura();
+        dadesParticipants = inscripcions.arrayCaptura();
         capcalera = String.format("%-11s %-15s %-22s %-11s","DNI","NOM","COGNOM","TELEFON"); 
         System.out.println(capcalera);
         for (int i = 0;i < dadesParticipants.length;i++){

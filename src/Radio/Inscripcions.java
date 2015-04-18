@@ -64,19 +64,63 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
     public int comptador = 0;
     String nom, cognom, DNI, telefon, puntuacio, capcalera, mostrarDades, continuar;;
     
-    public static void main(String[] args) {
-        
-        varis programa = new varis();
-        programa.inici();                
-    }   
     /**
-     * Metode per iniciar l'aplicacio
+     * Funció que recull la informacio dins un array bidimensional. Per cada
+     * posicio ficam quatre dades, el DNI, el nom, el cognom i el telefon.
+     * Una vegada insertat ho mostram perque l'usuari digui si es correcte o
+     * no. En cas de que no ho sigui torna a repetir l'introduccio de dades.
+     * En cas de que digui que si, ens demana si volem insertat un nou participant.
+     * En el cas afirmatiu torna a començar pero amb la seguent posicio del array.
+     * En cas negatiu, s'acaba la funcio.
+     * 
+     * @return dadesParticipants
      */
-    public void inici() {
-       
-       String [][] dadesFinalsParticipants = new String [MAXIM_CONCURSANTS][4];
-       dadesFinalsParticipants = arrayCaptura();
-
+    //Metode per afegir les dades dins una matriu.
+    public String [][] arrayCaptura(){
+        Scanner lector = new Scanner(System.in);
+        String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
+        boolean sortir = false;
+        String resposta;
+        while ((sortir == false)&&(comptador<MAXIM_CONCURSANTS)){
+            int j = 0;
+            System.out.println("===================================");
+            System.out.println("Introduim les dades del participant ("+(comptador+1)+")");
+            System.out.println("--------------------------------");
+            //Introduim els metode de les dades a cada columna. 
+            boolean ok = false;
+            while(!ok){
+                dadesParticipants[comptador][j]= comprovarDNI();
+                DNI = dadesParticipants[comptador][j];
+                dadesParticipants[comptador][j+1]= demanarNom();
+                nom = dadesParticipants[comptador][j+1];
+                dadesParticipants[comptador][j+2]= demanarCognom();
+                cognom = dadesParticipants[comptador][j+2];
+                dadesParticipants[comptador][j+3]= comprovarTelefon();
+                telefon = dadesParticipants[comptador][j+3];
+                System.out.println("--------------------------------");
+                String total = mostrarDades(DNI, nom, cognom, telefon);
+                System.out.println(total);
+                System.out.println("--------------------------------");
+                System.out.println("¿Son correctes aquestes dades?[si-no]");
+                System.out.print("Resposta: ");
+                resposta = lector.nextLine();
+                if (resposta.equals("si")){
+                    ok = true;
+                }
+            }
+            //Mostram les inscripcions que quedenper arribar al maxim.
+            System.out.println("Queden "+(MAXIM_CONCURSANTS - (comptador+1) + " inscripcions lliures.")); 
+            System.out.println("===================================");
+            comptador++;  
+            //Demanam si volem insertar mes usuaris.
+            System.out.print("Vols inscriure un altre particiant?\n"
+                + "si o no: ");
+            continuar = lector.nextLine();
+            if (continuar.equalsIgnoreCase("no")){
+                sortir=true;
+            }
+        }
+        return dadesParticipants;
     }
     
      /**
@@ -276,64 +320,6 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
         String concursant;
         concursant = ("DNI:"+DNI+"  nom:"+nom +"  cognom:"+cognom+"  telefon:"+telefon);
         return concursant;
-    }
-    /**
-     * Funció que recull la informacio dins un array bidimensional. Per cada
-     * posicio ficam quatre dades, el DNI, el nom, el cognom i el telefon.
-     * Una vegada insertat ho mostram perque l'usuari digui si es correcte o
-     * no. En cas de que no ho sigui torna a repetir l'introduccio de dades.
-     * En cas de que digui que si, ens demana si volem insertat un nou participant.
-     * En el cas afirmatiu torna a començar pero amb la seguent posicio del array.
-     * En cas negatiu, s'acaba la funcio.
-     * 
-     * @return dadesParticipants
-     */
-    //Metode per afegir les dades dins una matriu.
-    public String [][] arrayCaptura(){
-        Scanner lector = new Scanner(System.in);
-        String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
-        boolean sortir = false;
-        String resposta;
-        while ((sortir == false)&&(comptador<MAXIM_CONCURSANTS)){
-            int j = 0;
-            System.out.println("===================================");
-            System.out.println("Introduim les dades del participant ("+(comptador+1)+")");
-            System.out.println("--------------------------------");
-            //Introduim els metode de les dades a cada columna. 
-            boolean ok = false;
-            while(!ok){
-                dadesParticipants[comptador][j]= comprovarDNI();
-                DNI = dadesParticipants[comptador][j];
-                dadesParticipants[comptador][j+1]= demanarNom();
-                nom = dadesParticipants[comptador][j+1];
-                dadesParticipants[comptador][j+2]= demanarCognom();
-                cognom = dadesParticipants[comptador][j+2];
-                dadesParticipants[comptador][j+3]= comprovarTelefon();
-                telefon = dadesParticipants[comptador][j+3];
-                System.out.println("--------------------------------");
-                String total = mostrarDades(DNI, nom, cognom, telefon);
-                System.out.println(total);
-                System.out.println("--------------------------------");
-                System.out.println("¿Son correctes aquestes dades?[si-no]");
-                System.out.print("Resposta: ");
-                resposta = lector.nextLine();
-                if (resposta.equals("si")){
-                    ok = true;
-                }
-            }
-            //Mostram les inscripcions que quedenper arribar al maxim.
-            System.out.println("Queden "+(MAXIM_CONCURSANTS - (comptador+1) + " inscripcions lliures.")); 
-            System.out.println("===================================");
-            comptador++;  
-            //Demanam si volem insertar mes usuaris.
-            System.out.print("Vols inscriure un altre particiant?\n"
-                + "si o no: ");
-            continuar = lector.nextLine();
-            if (continuar.equalsIgnoreCase("no")){
-                sortir=true;
-            }
-        }
-        return dadesParticipants;
     }
 }
 
