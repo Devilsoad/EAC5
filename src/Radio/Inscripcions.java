@@ -2,7 +2,7 @@ package Radio;
 
 /**
 *
-* @author silvia
+* @author Silvia, Llorenç, Jose
 */
 public class Inscripcions {
 
