@@ -4,7 +4,7 @@ import static Radio.Inscripcions.MAXIM_CONCURSANTS;
 
 /**
  *
- * @author Jose, Silvia
+ * @author Jose, Silvia.
  */
 public class Puntuacio {
     Inscripcions inscripcions = new Inscripcions();
