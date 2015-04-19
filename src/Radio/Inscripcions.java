@@ -104,11 +104,9 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
                 System.out.println("¿Son correctes aquestes dades?[si-no]");
                 System.out.print("Resposta: ");
                 resposta = lector.nextLine();
-                if (resposta.equals("si")){
-                    ok = true;
-                }
+                ok = resposta.equals("si");
             }
-            //Mostram les inscripcions que queden per arribar al maxim.
+            //Mostram les inscripcions que quedenper arribar al maxim.
             System.out.println("Queden "+(MAXIM_CONCURSANTS - (comptador+1) + " inscripcions lliures.")); 
             System.out.println("===================================");
             comptador++;  
@@ -116,8 +114,8 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
             System.out.print("Vols inscriure un altre particiant?\n"
                 + "si o no: ");
             continuar = lector.nextLine();
-            if (continuar.equals("no")){
-                sortir = true;
+            if (continuar.equalsIgnoreCase("no")){
+                sortir=true;
             }
         }
         return dadesParticipants;
@@ -322,4 +320,3 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
         return concursant;
     }
 }
-
