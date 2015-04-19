@@ -108,7 +108,7 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
                     ok = true;
                 }
             }
-            //Mostram les inscripcions que quedenper arribar al maxim.
+            //Mostram les inscripcions que queden per arribar al maxim.
             System.out.println("Queden "+(MAXIM_CONCURSANTS - (comptador+1) + " inscripcions lliures.")); 
             System.out.println("===================================");
             comptador++;  
@@ -116,8 +116,8 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
             System.out.print("Vols inscriure un altre particiant?\n"
                 + "si o no: ");
             continuar = lector.nextLine();
-            if (continuar.equalsIgnoreCase("no")){
-                sortir=true;
+            if (continuar.equals("no")){
+                sortir = true;
             }
         }
         return dadesParticipants;
