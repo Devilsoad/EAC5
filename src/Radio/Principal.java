@@ -1,6 +1,5 @@
 package Radio;
 
-import static Radio.Inscripcions.MAXIM_CONCURSANTS;
 import java.util.Scanner;
 /**
  *
@@ -96,6 +95,7 @@ public class Principal {
                 inici();
             break;
             case 3:
+                menuLlistesConcursants();
                 inici();
             break;
             default:
@@ -156,6 +156,13 @@ public class Principal {
             break;
         }    
     }
+    /**
+     * Menu on es modifiquen les dades. Primer se ha de introduir el DNI
+     * que del participant que es vols canviar, i després de comprovar que es
+     * correcte, mostra les dades que estan ficades en aquest moment. Una vegada
+     * mostrat, seleccionam la dada que volem canviar. La canviam segons les
+     * funcions que importam en cada cas.
+     */
     //Menu modificar
     public void menuModificar(){
         Scanner lector = new Scanner(System.in);
@@ -206,18 +213,51 @@ public class Principal {
             break;
         }
     }
-    
-    
+    /**
+     * Aquest menu mostra la peticio de la llista que vol l'usuari,
+     * en cada cas, crida la funcio corresponent.
+     * 
+     */
     //Menu llistats
-    
-    //Llista al Twitter dels inscrits.
-    public void llistaInicialConcursants(){
+    public void menuLlistesConcursants(){
+        Scanner lector = new Scanner(System.in);
+        int opcio = 0;
+        boolean correcte = false;
         System.out.println("===================================\n"
-                + "Publicacio de la llista de participants pel Twitter\n"
+                + "Ha de triar una llista per veure\n"
                 + "===================================");
-        formatLlistaTwitter();
-        
+        // Mostram el menu i cridam a la funcio que marqui la resposta.
+        System.out.println("(1) Llista de localitzacio");
+        System.out.println("(2) Llista de Twitter");
+        System.out.println("-----------------------");
+        // Comprovam que la opcio estigui entre les 2 disponibles.
+        while(!correcte){
+            System.out.print("¿Quina llista vol?:");
+            opcio = lector.nextInt();  
+            if((opcio==1)||(opcio==2)){
+                correcte = true;
+            }else{
+                System.out.println("Opcio incorrecte, 1 o 2.");
+                System.out.println("-----------------------");
+                correcte = false;
+            }
+        }
+        // Escull l'opcio que se ha introduit.
+        switch(opcio){
+            case 1:
+                inscripcions.llistatParticipantsLocalitzacio();
+                inici();
+            break;
+            case 2:
+                inscripcions.llistatParticipantsTwitter();
+                inici();
+            break;
+            default:
+                
+            break;
+        } 
     }
+    /*
     //Treim les dades per formatetjar-les.
     public void formatLlistaPresentador(){
         String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
@@ -235,4 +275,5 @@ public class Principal {
             System.out.println(arrayMostrar[i]);
         } 
     }
+    */
 }
