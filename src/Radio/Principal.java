@@ -4,7 +4,7 @@ import static Radio.Inscripcions.MAXIM_CONCURSANTS;
 import java.util.Scanner;
 /**
  *
- * @author Jose, Llorenç, Silvia
+ * @author Jose
  */
 public class Principal {
     // Creació d'una instància de DadesConcurs
@@ -13,6 +13,8 @@ public class Principal {
             ,continuar,DNICercat;
     int comptador;
     Inscripcions inscripcions = new Inscripcions();
+    Puntuacio funcionsPuntuacio = new Puntuacio();
+    String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
     
     public static void main(String[] args) {
         
@@ -88,7 +90,6 @@ public class Principal {
         switch(opcio){
             case 1:
                 inscripcions.arrayCaptura();   
-                formatLlistaPresentador();
                 inici();
             break;
             case 2:
@@ -138,19 +139,22 @@ public class Principal {
         }
         switch(opcio){
             case 1:
-                
+                funcionsPuntuacio.inicialitzarPunts();
+                menuQualificacions();
             break;
             case 2:
-          
+                funcionsPuntuacio.ficarPunts();
+                menuQualificacions();
             break;
             case 3:
-          
+                funcionsPuntuacio.llistarDadesPuntuacions();
+                menuQualificacions();
             break;
             case 4:
-          
+                menuQualificacions();
             break;
             case 5:
-          
+                menuQualificacions();
             break;
             default:
                 
@@ -246,7 +250,7 @@ public class Principal {
         // Escull l'opcio que se ha introduit.
         switch(opcio){
             case 1:
-                inscripcions.llistatParticipantsLocalitzacio();
+                formatLlistaPresentador();
                 inici();
             break;
             case 2:
@@ -260,19 +264,19 @@ public class Principal {
     }
     //Treim les dades per formatetjar-les.
     public void formatLlistaPresentador(){
-        String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
+        String [][] dadesParticipantsInscrits = new String [MAXIM_CONCURSANTS][4];
         String [] arrayMostrar = new String [MAXIM_CONCURSANTS];
-        dadesParticipants = inscripcions.arrayCaptura();
+        dadesParticipantsInscrits = inscripcions.arrayCaptura();
         capcalera = String.format("%-11s %-15s %-22s %-11s","DNI","NOM","COGNOM","TELEFON"); 
         System.out.println(capcalera);
-        for (int i = 0;i < dadesParticipants.length;i++){
+        for (int i = 0;i < dadesParticipantsInscrits.length;i++){
             int j = 0;
-            DNI = dadesParticipants[i][j];
-            nom = dadesParticipants[i][j+1];
-            cognom = dadesParticipants[i][j+2];
-            telefon = dadesParticipants[i][j+3];
+            DNI = dadesParticipantsInscrits[i][j];
+            nom = dadesParticipantsInscrits[i][j+1];
+            cognom = dadesParticipantsInscrits[i][j+2];
+            telefon = dadesParticipantsInscrits[i][j+3];
             arrayMostrar[i]= String.format("%-11s %-15s %-22s %-11s",DNI,nom,cognom,telefon);
             System.out.println(arrayMostrar[i]);
-        } 
+        }
     }
 }
