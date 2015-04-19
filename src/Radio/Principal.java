@@ -1,5 +1,6 @@
 package Radio;
 
+import static Radio.Inscripcions.MAXIM_CONCURSANTS;
 import java.util.Scanner;
 /**
  *
