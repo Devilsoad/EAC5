@@ -62,7 +62,8 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
     public static final String DNICARACTERS = "TRWAGMYFPDXBNJZSQVHLCKE";
     public static final int MIDATELEFONIDNI = 9;
     public int comptador = 0;
-    String nom, cognom, DNI, telefon, puntuacio, capcalera, mostrarDades, continuar;;
+    String nom, cognom, DNI, telefon, puntuacio, capcalera, mostrarDades, continuar;
+    
     
     /**
      * Funció que recull la informacio dins un array bidimensional. Per cada
@@ -81,7 +82,7 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
         String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
         boolean sortir = false;
         String resposta;
-        while ((sortir == false)&&(comptador<MAXIM_CONCURSANTS)){
+        while ((!sortir)&&(comptador<MAXIM_CONCURSANTS)){
             int j = 0;
             System.out.println("===================================");
             System.out.println("Introduim les dades del participant ("+(comptador+1)+")");
@@ -104,9 +105,8 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
                 System.out.println("¿Son correctes aquestes dades?[si-no]");
                 System.out.print("Resposta: ");
                 resposta = lector.nextLine();
-                if (resposta.equals("si")){
-                    ok = true;
-                }
+                ok = resposta.equalsIgnoreCase("si");
+               
             }
             //Mostram les inscripcions que queden per arribar al maxim.
             System.out.println("Queden "+(MAXIM_CONCURSANTS - (comptador+1) + " inscripcions lliures.")); 
@@ -115,10 +115,9 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
             //Demanam si volem insertar mes usuaris.
             System.out.print("Vols inscriure un altre particiant?\n"
                 + "si o no: ");
-            continuar = lector.nextLine();
-            if (continuar.equals("no")){
-                sortir = true;
-            }
+            resposta = lector.nextLine();
+            
+            sortir = resposta.equalsIgnoreCase("no");
         }
         return dadesParticipants;
     }
@@ -237,21 +236,27 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
      */
     //Metode per demanar el nom.
     public String demanarNom(){
-        nom = "";
-        Scanner lector = new Scanner(System.in); 
-        boolean correcteNom = false;
-        System.out.print("Nom: ");
-        nom = lector.nextLine();
-        //comprovam que els caracters siguin els permesos.
-        while (!correcteNom){
-            if (nom.matches("[a-zA-Z ]*")){
+    boolean correcteNom=false;
+        do{
+            nom = "";
+            
+            Scanner lector = new Scanner(System.in); 
+            System.out.print("Nom: ");
+            nom = lector.nextLine();
+            
+            // comprovam que el nom tingui entre 1 i 18 caracters
+            if ((nom.length()<1)||(nom.length()>19)){
+                System.out.print("El nom ha de tenir entre 1 i 18 caràcters ");
+            //comprovam que els caracters siguin els permesos.
+            } else if (nom.matches("[a-zA-Z ]*")){
                 correcteNom = true;
-                } else {
-                System.out.println("El nom es incorrecte, nomes es permeten lletres.");
-                }
-        }
+            } else {
+                System.out.print("Els caracters introduits son incorrectes. ");
+            }
+        }while (!correcteNom);
+          
         return nom;
-    }
+        }
     /**
      * Demanam el cognom a l'usuari, feim la comprovacio que siguin lletres, si ho
      * son deim que es correcte, si no errada.
@@ -260,19 +265,26 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
      */
     //Metode per demanar el cognom.
     public String demanarCognom(){
-        cognom = "";
-        Scanner lector = new Scanner(System.in); 
-        boolean correcteCognom = false;
-        System.out.print("Cognom: ");
-        cognom = lector.nextLine();
-        //comprovam que els caracters siguin els permesos.
-        while (!correcteCognom){
-            if (cognom.matches("[a-zA-Z ]*")){
-                correcteCognom = true;
-                } else {
-                System.out.println("El cognom es incorrecte, nomes es permeten lletres.");
-                }
-        }
+        boolean correcteCognom=false;
+        do{
+            cognom = "";
+            Scanner lector = new Scanner(System.in); 
+            System.out.print("Cognom: ");
+            cognom = lector.nextLine();
+            // comprovam que el cognom tingui entre 1 i 20 caracters
+            if ( cognom.matches("\\s")){
+                System.out.print("El cognom ha de tenir entre 1 i 18 caràcters ");
+                correcteCognom = false;
+            }
+             //comprovam que els caracters siguin els permesos.
+            //} else if (cognom.matches("[a-zA-Z_Ç_ç_Ñ_ñ]*")){
+                correcteCognom = (cognom.matches("[[a-zA-Z *]+ñ+Ñ]*"));
+            //} else {
+                //System.out.print("Els caracters introduits son incorrectes. ");
+            //}
+            
+        }while (!correcteCognom);
+        
         return cognom;
     }
     /**
@@ -322,4 +334,3 @@ public void comencarAmbNovesDades(DadesConcurs dadesConcurs, String[][]dades){
         return concursant;
     }
 }
-
