@@ -147,13 +147,14 @@ public class Principal {
                 menuQualificacions();
             break;
             case 3:
-                funcionsPuntuacio.llistarDadesPuntuacions();
+                formatLlistaRonda();
                 menuQualificacions();
             break;
             case 4:
                 menuQualificacions();
             break;
             case 5:
+                menuSiNoEliminats();
                 menuQualificacions();
             break;
             default:
@@ -250,11 +251,11 @@ public class Principal {
         // Escull l'opcio que se ha introduit.
         switch(opcio){
             case 1:
-                formatLlistaPresentador();
+                formatLlistaPresentadorInicial();
                 inici();
             break;
             case 2:
-                inscripcions.llistatParticipantsTwitter();
+                formatLlistaTwitterInicial();
                 inici();
             break;
             default:
@@ -262,21 +263,184 @@ public class Principal {
             break;
         } 
     }
-    //Treim les dades per formatetjar-les.
-    public void formatLlistaPresentador(){
-        String [][] dadesParticipantsInscrits = new String [MAXIM_CONCURSANTS][4];
-        String [] arrayMostrar = new String [MAXIM_CONCURSANTS];
-        dadesParticipantsInscrits = inscripcions.arrayCaptura();
+    
+    //Menu llistats
+    public void menuSiNoEliminats(){
+        Scanner lector = new Scanner(System.in);
+        int opcio = 0;
+        boolean correcte = false;
+        System.out.println("===================================\n"
+                + "Ha de triar una llista per veure\n"
+                + "===================================");
+        // Mostram el menu i cridam a la funcio que marqui la resposta.
+        System.out.println("(1) Llista d'eliminats");
+        System.out.println("(2) Llista dels classificats");
+        System.out.println("-----------------------");
+        // Comprovam que la opcio estigui entre les 2 disponibles.
+        while(!correcte){
+            System.out.print("¿Quina llista vol?:");
+            opcio = lector.nextInt();  
+            if((opcio==1)||(opcio==2)){
+                correcte = true;
+            }else{
+                System.out.println("Opcio incorrecte, 1 o 2.");
+                System.out.println("-----------------------");
+                correcte = false;
+            }
+        }
+        // Escull l'opcio que se ha introduit.
+        switch(opcio){
+            case 1:
+                formatLlistaEliminats();
+                menuQualificacions();
+            break;
+            case 2:
+                formatLlistaSegueixen();
+                menuQualificacions();
+            break;
+            default:
+                
+            break;
+        } 
+    }
+    
+    //Treim les dades per formatetjar-les i mostrar-les(1.3).
+    public void formatLlistaPresentadorInicial(){
+        String [] arrayOrdenacioPerDNI = new String [MAXIM_CONCURSANTS];
+        String [][] dadesFinalsParticipants = new String [MAXIM_CONCURSANTS][5];
+        System.out.println("---------------------------------");
         capcalera = String.format("%-11s %-15s %-22s %-11s","DNI","NOM","COGNOM","TELEFON"); 
         System.out.println(capcalera);
-        for (int i = 0;i < dadesParticipantsInscrits.length;i++){
+        for (int i = 0;i < dadesFinalsParticipants.length;i++){
             int j = 0;
-            DNI = dadesParticipantsInscrits[i][j];
-            nom = dadesParticipantsInscrits[i][j+1];
-            cognom = dadesParticipantsInscrits[i][j+2];
-            telefon = dadesParticipantsInscrits[i][j+3];
-            arrayMostrar[i]= String.format("%-11s %-15s %-22s %-11s",DNI,nom,cognom,telefon);
-            System.out.println(arrayMostrar[i]);
+            DNI = dadesFinalsParticipants[i][j];
+            nom = dadesFinalsParticipants[i][j+1];
+            cognom = dadesFinalsParticipants[i][j+2];
+            telefon = dadesFinalsParticipants[i][j+3];
+            arrayOrdenacioPerDNI[i]= String.format("%-11s %-15s %-22s %-11s",DNI,nom,cognom,telefon);
         }
+        String aux;
+        //Feim l'ordenacio per DNI.
+        for (int i = 1;i < comptador;i++){
+            for (int j = 0;j < comptador-1;j++){
+                if(arrayOrdenacioPerDNI[j].compareTo(arrayOrdenacioPerDNI[j+1])>0){
+                    aux = arrayOrdenacioPerDNI[j];
+                    arrayOrdenacioPerDNI[j]=arrayOrdenacioPerDNI[j+1];
+                    arrayOrdenacioPerDNI[j+1]=aux;
+                } 
+            }       
+        }
+        //Mostram les dades ja ordenades.
+        for (int i = 0;i < comptador;i++){
+            System.out.println(arrayOrdenacioPerDNI[i]);
+        }    
+    }
+    //Treim les dades per formatetjar-les i mostrar-les(1.3).
+    public void formatLlistaTwitterInicial(){
+        String [] arrayOrdenacioPerCognoms = new String [MAXIM_CONCURSANTS];
+        String [][] dadesFinalsParticipants = new String [MAXIM_CONCURSANTS][5];
+        System.out.println("---------------------------------");
+        capcalera = String.format("%-15s %-22s","NOM","COGNOM"); 
+        System.out.println(capcalera);
+        for (int i = 0;i < dadesFinalsParticipants.length;i++){
+            int j = 0;
+            nom = dadesFinalsParticipants[i][j+1];
+            cognom = dadesFinalsParticipants[i][j+2];
+            arrayOrdenacioPerCognoms[i]= String.format("%-22s %-15s",cognom,nom);
+        }
+        String aux;
+        //Feim l'ordenacio per cognoms.
+        for (int i = 1;i < comptador;i++){
+            for (int j = 0;j < comptador-1;j++){
+                if(arrayOrdenacioPerCognoms[j].compareTo(arrayOrdenacioPerCognoms[j+1])>0){
+                    aux = arrayOrdenacioPerCognoms[j];
+                    arrayOrdenacioPerCognoms[j]=arrayOrdenacioPerCognoms[j+1];
+                    arrayOrdenacioPerCognoms[j+1]=aux;
+                } 
+            }       
+        }
+        //Mostram les dades ja ordenades.
+        for (int i = 0;i < comptador;i++){
+            System.out.println(arrayOrdenacioPerCognoms[i]);
+        }    
+    }
+    
+    //Treim les dades per formatetjar-les i mostrar-les(2.3).
+    public void formatLlistaRonda(){
+        String [] mostrarRonda = new String [MAXIM_CONCURSANTS];
+        String [][] dadesFinalsParticipants = new String [MAXIM_CONCURSANTS][5];
+        System.out.println("---------------------------------");
+        capcalera = String.format("%-11s %-15s %-22s %-11s %8s","DNI","NOM","COGNOM","TELEFON","PUNTS"); 
+        System.out.println(capcalera);
+        for (int i = 0;i < dadesFinalsParticipants.length;i++){
+            int j = 0;
+            DNI = dadesFinalsParticipants[i][j];
+            nom = dadesFinalsParticipants[i][j+1];
+            cognom = dadesFinalsParticipants[i][j+2];
+            telefon = dadesFinalsParticipants[i][j+3];
+            puntuacio = dadesFinalsParticipants[i][j+4];
+            mostrarRonda[i]= String.format("%-11s %-15s %-22s %-11s",DNI,nom,cognom,telefon,puntuacio);
+            System.out.println(mostrarRonda[i]); 
+        }    
+    }
+    //Treim les dades per formatetjar-les i mostrar-les(2.5).
+    public void formatLlistaEliminats(){
+        String [] arrayOrdenacioPerPuntuacio = new String [MAXIM_CONCURSANTS];
+        String [][] dadesFinalsParticipants = new String [MAXIM_CONCURSANTS][5];
+        System.out.println("---------------------------------");
+        capcalera = String.format("%8s %-15s %-22s","PUNTS","NOM","COGNOM"); 
+        System.out.println(capcalera);
+        for (int i = 0;i < dadesFinalsParticipants.length;i++){
+            int j = 0;
+            nom = dadesFinalsParticipants[i][j+1];
+            cognom = dadesFinalsParticipants[i][j+2];
+            puntuacio = dadesFinalsParticipants[i][j+4];
+            arrayOrdenacioPerPuntuacio[i]= String.format("%8s %-22s %-15s",puntuacio,cognom,nom);
+        }
+        String aux;
+        //Feim l'ordenacio per puntuacio.
+        for (int i = 1;i < comptador;i++){
+            for (int j = 0;j < comptador-1;j++){
+                if(arrayOrdenacioPerPuntuacio[j].compareTo(arrayOrdenacioPerPuntuacio[j+1])>0){
+                    aux = arrayOrdenacioPerPuntuacio[j];
+                    arrayOrdenacioPerPuntuacio[j]=arrayOrdenacioPerPuntuacio[j+1];
+                    arrayOrdenacioPerPuntuacio[j+1]=aux;
+                } 
+            }       
+        }
+        //Mostram les dades ja ordenades.
+        for (int i = 0;i < comptador;i++){
+            System.out.println(arrayOrdenacioPerPuntuacio[i]);
+        }    
+    }
+    //Treim les dades per formatetjar-les i mostrar-les(2.5).
+    public void formatLlistaSegueixen(){
+        String [] arrayOrdenacioPerPuntuacio = new String [MAXIM_CONCURSANTS];
+        String [][] dadesFinalsParticipants = new String [MAXIM_CONCURSANTS][5];
+        System.out.println("---------------------------------");
+        capcalera = String.format("%8s %-15s %-22s","PUNTS","NOM","COGNOM"); 
+        System.out.println(capcalera);
+        for (int i = 0;i < dadesFinalsParticipants.length;i++){
+            int j = 0;
+            nom = dadesFinalsParticipants[i][j+1];
+            cognom = dadesFinalsParticipants[i][j+2];
+            puntuacio = dadesFinalsParticipants[i][j+4];
+            arrayOrdenacioPerPuntuacio[i]= String.format("%8s %-22s %-15s",puntuacio,cognom,nom);
+        }
+        String aux;
+        //Feim l'ordenacio per puntuacio.
+        for (int i = 1;i < comptador;i++){
+            for (int j = 0;j < comptador-1;j++){
+                if(arrayOrdenacioPerPuntuacio[j].compareTo(arrayOrdenacioPerPuntuacio[j+1])>0){
+                    aux = arrayOrdenacioPerPuntuacio[j];
+                    arrayOrdenacioPerPuntuacio[j]=arrayOrdenacioPerPuntuacio[j+1];
+                    arrayOrdenacioPerPuntuacio[j+1]=aux;
+                } 
+            }       
+        }
+        //Mostram les dades ja ordenades.
+        for (int i = 0;i < comptador;i++){
+            System.out.println(arrayOrdenacioPerPuntuacio[i]);
+        }    
     }
 }
