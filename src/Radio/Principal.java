@@ -257,7 +257,6 @@ public class Principal {
             break;
         } 
     }
-    /*
     //Treim les dades per formatetjar-les.
     public void formatLlistaPresentador(){
         String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
@@ -275,5 +274,4 @@ public class Principal {
             System.out.println(arrayMostrar[i]);
         } 
     }
-    */
 }
