@@ -1,17 +1,18 @@
 package Radio;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
 *
-* @author Silvia, Llorenc, Jose
+* @author Silvia, Jose
 */
 public class Inscripcions {
 
-// Creacio d'una instancia de DadesConcurs
-DadesConcurs dadesConcurs = new DadesConcurs();
+    // Creacio d'una instancia de DadesConcurs
+    DadesConcurs dadesConcurs = new DadesConcurs();
 
-   /**
+    /**
      * Nombre maxim de concursants
      */
     static int MAXIM_CONCURSANTS = 15;
@@ -39,6 +40,25 @@ DadesConcurs dadesConcurs = new DadesConcurs();
      * Vector de les lletres d'un dni ordenades d'acord amb l'index usat en el calcul 
      * de la lletra del dni
      */
+    
+    /**
+     * Identificador de l'ordre dels concursant usant el criteri DNI
+     */
+    static int INDEX_DNI = 0;
+    /**
+     * Identificador de l'ordre dels concursant usant el criteri COGNOMS
+     */
+    static int INDEX_COGNOMS = 2;
+    /**
+     * Identificador de l'ordre dels concursant usant el criteri PUNTS
+     */    
+    static int INDEX_PUNTS = 1;
+    /**
+     * Valor que indica quants index hi haurÃ  a l'aplicaciÃ³
+     */
+    static int DIM_INDEXOS=3;
+
+    
     public static final String DNICARACTERS = "TRWAGMYFPDXBNJZSQVHLCKE";
     public static final int MIDATELEFONIDNI = 9;
     public int comptador = 0;
@@ -100,6 +120,29 @@ DadesConcurs dadesConcurs = new DadesConcurs();
             sortir = resposta.equalsIgnoreCase("no");
         }
         return dadesParticipants;
+    }
+    
+    public String[] arrayCercatDNI(){
+        
+        String [] arrayCercat = new String [4];
+        String DNIACercar;
+        
+        DNIACercar=introduirDNI();
+        int posicio =0;
+        boolean cercat = false;
+        while (posicio<dadesConcurs.numConcursants&&!cercat){
+            if (dadesConcurs.dadesPersonals[posicio][DADES_DNI].equalsIgnoreCase(DNIACercar)){
+            arrayCercat = dadesConcurs.dadesPersonals[posicio];
+            cercat = true;
+            System.out.print(Arrays.toString(dadesConcurs.dadesPersonals[posicio]));
+           
+            //int posicioDades = dadesConcurs.indexos [INDEX_DNI][posicio];
+            //cercat = dadesConcurs.dadesPersonals[posicioDades][DADES_DNI].equalsIgnoreCase(DNIACercar);
+            } else if (!cercat){
+                posicio++;
+            }
+        }
+        return arrayCercat;
     }
     
      /**
@@ -216,23 +259,17 @@ DadesConcurs dadesConcurs = new DadesConcurs();
      */
     //Metode per demanar el nom.
     public String demanarNom(){
-    boolean correcteNom=false;
+    boolean correctenom;
         do{
             nom = "";
             Scanner lector = new Scanner(System.in); 
+            
             System.out.print("Nom: ");
-            nom = lector.nextLine(); 
-            // comprovam que el nom tingui entre 1 i 18 caracters
-            if ((nom.length()<1)||(nom.length()>19)){
-                System.out.println("El nom ha de tenir entre 1 i 18 caracters ");
-            //comprovam que els caracters siguin els permesos.
-            } else if (nom.matches("[a-zA-Z ]*")){
-                correcteNom = true;
-            } else {
-                System.out.println("Els caracters introduits son incorrectes. ");
-            }
-        }while (!correcteNom);
-          
+            nom = lector.nextLine();
+                correctenom =nom.matches("[a-zA-Z*]+");
+                
+        }while (!correctenom);
+        
         return nom;
         }
     /**
@@ -245,15 +282,17 @@ DadesConcurs dadesConcurs = new DadesConcurs();
     public String demanarCognom(){
         boolean correcteCognom;
         do{
-        cognom = "";
-        Scanner lector = new Scanner(System.in); 
-        System.out.print("Cognom: ");
-        cognom = lector.nextLine();
-        correcteCognom =cognom.matches("[a-zA-Z/ñ*]+");
+            cognom = "";
+            Scanner lector = new Scanner(System.in); 
+            
+            System.out.print("Cognom: ");
+            cognom = lector.nextLine();
+                correcteCognom =cognom.matches("[a-zA-Z*]+");
+                
         }while (!correcteCognom);
-
+        
         return cognom;
-}
+    }
     /**
      * Demanam la puntuacio del concursant. Ha de ser de 1 a 4 digits, 
      * si no es dins aquets mostra una errada, siho es depenent del nombre que
@@ -277,7 +316,7 @@ DadesConcurs dadesConcurs = new DadesConcurs();
                 }
         }
         return puntuacio;
-    }   
+    }     
     /**
      * Funcio que serveix per juntar 4 dades String dins una, afagint un parell
      * de noms perque s'entengui la dada que surt.
