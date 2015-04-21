@@ -151,7 +151,11 @@ public class Llistats {
         }    
     }
     
-      public void formatLlistaTwitterFinal(){
+    /**
+     * Mostra la llista de guanyadors per al Twitter
+     * 
+     */
+    public void formatLlistaTwitterFinal(){
         String [][] dadesFinalsParticipants = new String [MAXIM_CONCURSANTS][5];
         int[] llistaGuanyadors = new int [MAXIM_CONCURSANTS];
         int lengthLlistaGuanyadors = 0;
@@ -178,14 +182,14 @@ public class Llistats {
         System.out.println(capcalera);
         for (int i = 0;i < lengthLlistaGuanyadors;i++){
             int j = 0;
-            nom = dadesFinalsParticipants[i][j+1];
-            cognom = dadesFinalsParticipants[i][j+2];
+            nom = dadesFinalsParticipants[llistaGuanyadors[i]][j+1];
+            cognom = dadesFinalsParticipants[llistaGuanyadors[i]][j+2];
             //Escurçar cognom
             if(cognom.length() > 16){
                 cognom = cognom.substring(0, 15) + "...";
             }
             
-            puntuacio = dadesFinalsParticipants[i][j+4];
+            puntuacio = dadesFinalsParticipants[llistaGuanyadors[i]][j+4];
             String sortida = String.format("%-15s %-16s %5s",nom, cognom, puntuacio);
             
             System.out.println(sortida);
