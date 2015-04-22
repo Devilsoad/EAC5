@@ -7,7 +7,7 @@ package Radio;
 
 /**
  *
- * @author Jose
+ * @author Jose, Silvia
  */
 public class DadesConcurs {
         /**

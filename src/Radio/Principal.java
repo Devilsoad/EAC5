@@ -1,20 +1,19 @@
 package Radio;
 
-import static Radio.Inscripcions.MAXIM_CONCURSANTS;
 import java.util.Scanner;
 /**
  *
- * @author Jose
+ * @author Jose, Silvia
  */
 public class Principal {
-    // Creació d'una instància de DadesConcurs
+    // Creacio d'una instancia de DadesConcurs
     DadesConcurs dadesConcurs = new DadesConcurs();
     String DNICercat;
     int comptador;
     Inscripcions inscripcions = new Inscripcions();
     Puntuacio funcionsPuntuacio = new Puntuacio();
     Llistats llista = new Llistats();
-    String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
+    
     
     public static void main(String[] args) {
         
@@ -35,7 +34,7 @@ public class Principal {
                 + "(2) Gestio de qualificacions\n"
                 + "-----------------------");
         while(!correcte){
-            System.out.print("¿Quina opcio vol?:");
+            System.out.print("Â¿Quina opcio vol?:");
             opcio = lector.nextInt();
             //comprova que sigui correcte el nombre.
             if((opcio==1)||(opcio==2)){
@@ -127,7 +126,7 @@ public class Principal {
                 + "(5) Llistar qualificacions pel Twitter\n"
                 + "-----------------------");
         while(!correcte){
-            System.out.print("¿Quina opcio vol?:");
+            System.out.print("Â¿Quina opcio vol?:");
             opcio = lector.nextInt();  
             if((opcio==1)||(opcio==2)||(opcio==3)||(opcio==4)||(opcio==5)){
                 correcte = true;
@@ -164,7 +163,7 @@ public class Principal {
     }
     /**
      * Menu on es modifiquen les dades. Primer se ha de introduir el DNI
-     * que del participant que es vols canviar, i després de comprovar que es
+     * que del participant que es vols canviar, i despres de comprovar que es
      * correcte, mostra les dades que estan ficades en aquest moment. Una vegada
      * mostrat, seleccionam la dada que volem canviar. La canviam segons les
      * funcions que importam en cada cas.
@@ -178,22 +177,26 @@ public class Principal {
         /* Mostram el menu i cridam a la funcio que cerca el DNI i retorna
         un array amb les dades d'aquest DNI.*/
         System.out.println("===================================\n"
-                + "Es troba al menu de modificacions, quin DNI vol modificar?");
+                + "Es troba al menu de modificacions, quin concursant vol modificar?");
         System.out.print("DNI: ");
         arrayCercat = inscripcions.arrayCercatDNI();
-        System.out.print(arrayCercat[comptador]); 
+        if (arrayCercat[comptador]==null){
+            inscripcions.DniNoTrobat();
+            inscripcions.arrayCercatDNI();
+        }
+        System.out.print(arrayCercat[comptador]); //ANULAR LINEA
         System.out.println("===================================\n"
                 + "Es troba al menu de modificacions, pot escollir entre aquestes"
-                + " tres opcions\n"
+                + " tres opcions\n:"
                 + "-----------------------");
-        System.out.println("DNI: "+DNICercat);
-        System.out.println("(1) Modificacio del nom: "+arrayCercat[comptador+1]);
-        System.out.println("(2) Modificacio dels cognoms: "+arrayCercat[comptador+2]);
+        System.out.println("DNI: "+arrayCercat[comptador]);
+        System.out.println("(1) Modificacio del nom: "+arrayCercat[comptador+2]);
+        System.out.println("(2) Modificacio dels cognoms: "+arrayCercat[comptador+1]);
         System.out.println("(3) Modificacio del telefon: "+arrayCercat[comptador+3]);
         System.out.println("-----------------------");
         // Comprovam que la opcio estigui entre les 3 disponibles.
         while(!correcte){
-            System.out.print("¿Quina opcio vol?:");
+            System.out.print("Â¿Quina opcio vol?:");
             opcio = lector.nextInt();  
             if((opcio==1)||(opcio==2)||(opcio==3)){
                 correcte = true;
@@ -206,13 +209,13 @@ public class Principal {
         // Escull l'opcio que se ha introduit.
         switch(opcio){
             case 1:
-                inici();
+                inscripcions.modificarNom(comptador+2);
             break;
             case 2:
-                inici();
+                inscripcions.modificarCognom(comptador+1);
             break;
             case 3:
-                inici();
+                inscripcions.modificarTelefon(comptador+3);
             break;
             default:
                 
@@ -238,7 +241,7 @@ public class Principal {
         System.out.println("-----------------------");
         // Comprovam que la opcio estigui entre les 2 disponibles.
         while(!correcte){
-            System.out.print("¿Quina llista vol?:");
+            System.out.print("Â¿Quina llista vol?:");
             opcio = lector.nextInt();  
             if((opcio==1)||(opcio==2)){
                 correcte = true;
@@ -278,7 +281,7 @@ public class Principal {
         System.out.println("-----------------------");
         // Comprovam que la opcio estigui entre les 2 disponibles.
         while(!correcte){
-            System.out.print("¿Quina llista vol?:");
+            System.out.print("Â¿Quina llista vol?:");
             opcio = lector.nextInt();  
             if((opcio==1)||(opcio==2)){
                 correcte = true;

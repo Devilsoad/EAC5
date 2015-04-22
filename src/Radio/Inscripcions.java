@@ -1,6 +1,5 @@
 package Radio;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -11,7 +10,8 @@ public class Inscripcions {
 
     // Creacio d'una instancia de DadesConcurs
     DadesConcurs dadesConcurs = new DadesConcurs();
-
+    Llistats llistats = new Llistats ();
+    
     /**
      * Nombre maxim de concursants
      */
@@ -54,7 +54,7 @@ public class Inscripcions {
      */    
     static int INDEX_PUNTS = 1;
     /**
-     * Valor que indica quants index hi haurÃ  a l'aplicaciÃ³
+     * Valor que indica quants index hi haurÃƒ  a l'aplicaciÃƒÂ³
      */
     static int DIM_INDEXOS=3;
 
@@ -63,6 +63,7 @@ public class Inscripcions {
     public static final int MIDATELEFONIDNI = 9;
     public int comptador = 0;
     String nom, cognom, DNI, telefon, puntuacio, capcalera, mostrarDades, continuar;
+   
     
     
     /**
@@ -79,39 +80,40 @@ public class Inscripcions {
     //Metode per afegir les dades dins una matriu.
     public String [][] arrayCaptura(){
         Scanner lector = new Scanner(System.in);
-        String [][] dadesParticipants = new String [MAXIM_CONCURSANTS][4];
+        
         boolean sortir = false;
         String resposta;
-        while ((!sortir)&&(comptador<MAXIM_CONCURSANTS)){
-            int j = 0;
+        while ((!sortir)&&(dadesConcurs.numConcursants<MAXIM_CONCURSANTS)){
+            
             System.out.println("===================================");
-            System.out.println("Introduim les dades del participant ("+(comptador+1)+")");
+            System.out.println("Introduim les dades del participant "
+                    + "("+(dadesConcurs.numConcursants+1)+")");
             System.out.println("--------------------------------");
             //Introduim els metode de les dades a cada columna. 
             boolean ok = false;
             while(!ok){
-                dadesParticipants[comptador][j]= comprovarDNI();
-                DNI = dadesParticipants[comptador][j];
-                dadesParticipants[comptador][j+1]= demanarNom();
-                nom = dadesParticipants[comptador][j+1];
-                dadesParticipants[comptador][j+2]= demanarCognom();
-                cognom = dadesParticipants[comptador][j+2];
-                dadesParticipants[comptador][j+3]= comprovarTelefon();
-                telefon = dadesParticipants[comptador][j+3];
+                dadesConcurs.dadesPersonals[dadesConcurs.numConcursants][DADES_DNI]= comprovarDNI();
+                DNI = dadesConcurs.dadesPersonals[dadesConcurs.numConcursants][DADES_DNI];
+                dadesConcurs.dadesPersonals[dadesConcurs.numConcursants][DADES_NOM]= demanarNom();
+                nom = dadesConcurs.dadesPersonals[dadesConcurs.numConcursants][DADES_NOM];
+                dadesConcurs.dadesPersonals[dadesConcurs.numConcursants][DADES_COGNOMS]= demanarCognom();
+                cognom = dadesConcurs.dadesPersonals[dadesConcurs.numConcursants][DADES_COGNOMS];
+                dadesConcurs.dadesPersonals[dadesConcurs.numConcursants][DADES_TELF]= comprovarTelefon();
+                telefon = dadesConcurs.dadesPersonals[dadesConcurs.numConcursants][DADES_TELF];
                 System.out.println("--------------------------------");
                 String total = mostrarDades(DNI, nom, cognom, telefon);
                 System.out.println(total);
-                System.out.println("--------------------------------");
-                System.out.println("¿Son correctes aquestes dades?[si-no]");
+                System.out.println("---------------------------------------");
+                System.out.println("Â¿Son correctes aquestes dades?[si-no]");
                 System.out.print("Resposta: ");
                 resposta = lector.nextLine();
                 ok = resposta.equalsIgnoreCase("si");
                
             }
             //Mostram les inscripcions que queden per arribar al maxim.
-            System.out.println("Queden "+(MAXIM_CONCURSANTS - (comptador+1) + " inscripcions lliures.")); 
+            System.out.println("Queden "+(MAXIM_CONCURSANTS - (dadesConcurs.numConcursants+1) + " inscripcions lliures.")); 
             System.out.println("===================================");
-            comptador++;  
+            dadesConcurs.numConcursants++;  
             //Demanam si volem insertar mes usuaris.
             System.out.print("Vols inscriure un altre particiant?\n"
                 + "si o no: ");
@@ -119,30 +121,66 @@ public class Inscripcions {
             
             sortir = resposta.equalsIgnoreCase("no");
         }
-        return dadesParticipants;
+        return dadesConcurs.dadesPersonals;
     }
-    
+    /**
+     * Cerca la posiciÃ³n DNI dins del vector de dades 
+     * @return la posiciÃ³ del concursant identificat amb el DNI
+     */
     public String[] arrayCercatDNI(){
         
         String [] arrayCercat = new String [4];
-        String DNIACercar;
         
-        DNIACercar=introduirDNI();
+        introduirDNI();
         int posicio =0;
         boolean cercat = false;
+        
         while (posicio<dadesConcurs.numConcursants&&!cercat){
-            if (dadesConcurs.dadesPersonals[posicio][DADES_DNI].equalsIgnoreCase(DNIACercar)){
-            arrayCercat = dadesConcurs.dadesPersonals[posicio];
-            cercat = true;
-            System.out.print(Arrays.toString(dadesConcurs.dadesPersonals[posicio]));
-           
-            //int posicioDades = dadesConcurs.indexos [INDEX_DNI][posicio];
-            //cercat = dadesConcurs.dadesPersonals[posicioDades][DADES_DNI].equalsIgnoreCase(DNIACercar);
-            } else if (!cercat){
+            if (DNI.equals(dadesConcurs.dadesPersonals[posicio][DADES_DNI]) ){
+                arrayCercat =dadesConcurs.dadesPersonals[posicio];
+                
+                cercat=true;
+            }
+            if (!cercat){
                 posicio++;
             }
         }
+        
         return arrayCercat;
+    }
+    /**
+     * Si el DNI no hi Ã©s crea un menÃº en el que es pot tornar a introduir o 
+     * anar al menÃº principal
+     */
+    public void DniNoTrobat(){
+        Scanner lector = new Scanner(System.in);
+        int opcio = 0;
+        boolean correcte = false;
+        System.out.println("===================================\n"
+                + "El DNI no s'ha trobat, pot escollir entre aquestes"
+                + " dues opcions\n"
+                + "-----------------------");
+        System.out.println ("(1) Tornar-ho a introduir:  ");
+        System.out.println ("(2) Anar al menÃº principal:  ");
+        System.out.println ("Â¿Quina opcio vol?:");
+        opcio = lector.nextInt(); 
+            
+        do {
+            switch(opcio){
+                case 1:
+                    correcte=true;
+                    break;
+                case 2:
+                    Principal.main (null);
+                    break;
+                default:
+                    System.out.println("Opcio incorrecte. 1 o 2 ");
+                    System.out.println("-----------------------");
+                    System.out.print("Â¿Quina opcio vol?: ");
+                    lector.next();
+            break;
+            }
+        } while (!correcte);
     }
     
      /**
@@ -158,7 +196,7 @@ public class Inscripcions {
         for(int i=0;i<totsDNI.length;i++){
             if(DNI.equals(totsDNI[i])){
                 return true;
-                } 
+            } 
         }
         return false;
     }  
@@ -178,11 +216,10 @@ public class Inscripcions {
             Scanner lector = new Scanner(System.in);
             DNI = lector.nextLine();
             //comprovam que els caracters siguin els permesos.
-            if ((DNI.length()== MIDATELEFONIDNI)&&(DNI.matches("[0-9]{8}[A-Z]"))){
-                dniCorrecte = true;
-            } else {
-                System.out.println("El valor introduit es incorrecte, torna a intenter-ho");
-            }
+            dniCorrecte = (DNI.length()== MIDATELEFONIDNI)&&(DNI.matches("[0-9]{8}[A-Z]"));
+                
+            if (!dniCorrecte)
+                System.out.println("El valor introduit es incorrecte, torna a intentar-ho");
         }
         return DNI;
     }
@@ -198,7 +235,7 @@ public class Inscripcions {
         boolean correcteDNI = calcularDNI(stringDNI);
         if (correcteDNI == true){
             System.out.println("El DNI " + stringDNI + " es correcte.");
-    }
+        }
         return stringDNI;
     }
     /**
@@ -242,8 +279,7 @@ public class Inscripcions {
             telefonBrut = lector.nextLine();
             //Llevam els caracters (-| |.), per deixar el numeros net.
             telefonNet = telefonBrut.replaceAll("[-|.| ]", "");
-            if ((telefonNet.length()== MIDATELEFONIDNI)&&(telefonNet.matches("[0-9]*"))){
-                telefonCorrecte = true;
+            if (telefonCorrecte =(telefonNet.length()== MIDATELEFONIDNI)&&(telefonNet.matches("[0-9]*"))){
                 System.out.println("El telefon introduit(" + telefonNet + ") es correcte.");
             } else {
                 System.out.println("El telefon introduit es incorrecte, torna a intentar-ho.");
@@ -262,12 +298,13 @@ public class Inscripcions {
     boolean correctenom;
         do{
             nom = "";
-            Scanner lector = new Scanner(System.in); 
-            
+            Scanner lector = new Scanner(System.in);            
             System.out.print("Nom: ");
             nom = lector.nextLine();
-                correctenom =nom.matches("[a-zA-Z*]+");
-                
+            correctenom =nom.matches("[a-zA-Z*]+");
+            if (!correctenom){
+                System.out.println("El NOM introduit es incorrecte, torna a intentar-ho.");    
+            }    
         }while (!correctenom);
         
         return nom;
@@ -287,12 +324,43 @@ public class Inscripcions {
             
             System.out.print("Cognom: ");
             cognom = lector.nextLine();
-                correcteCognom =cognom.matches("[a-zA-Z*]+");
+            correcteCognom =cognom.matches("[a-zA-Z*]+");
+            if (!correcteCognom)
+                System.out.println("El COGNOM introduit es incorrecte, torna a intentar-ho."); 
                 
         }while (!correcteCognom);
         
         return cognom;
     }
+    /**
+     * Substitueix el nom del concursant per el nom nou introduit
+     * @param posicio 
+     * @return dadesConcurs.dadesPersonals
+     */
+    public String[][] modificarNom(int posicio){
+        
+        dadesConcurs.dadesPersonals[posicio][DADES_NOM]=demanarNom();   
+        System.out.println("El "+dadesConcurs.dadesPersonals[posicio][DADES_NOM]);//anular
+        
+        return dadesConcurs.dadesPersonals;
+    }
+     /**
+     * Substitueix el cognom del concursant per el cognom nou introduit
+     * @param posicio 
+     */
+    public void modificarCognom(int posicio){
+        demanarCognom();
+        dadesConcurs.dadesPersonals[posicio][DADES_COGNOMS]=cognom;        
+    }
+     /**
+     * Substitueix el telÃ¨fon del concursant per el telÃ¨fon nou introduit
+     * @param posicio 
+     */
+    public void modificarTelefon(int posicio){
+        comprovarTelefon();
+        dadesConcurs.dadesPersonals[posicio][DADES_TELF]=telefon;        
+    }
+    
     /**
      * Demanam la puntuacio del concursant. Ha de ser de 1 a 4 digits, 
      * si no es dins aquets mostra una errada, siho es depenent del nombre que

@@ -4,7 +4,7 @@ import static Radio.Inscripcions.MAXIM_CONCURSANTS;
 
 /**
  *
- * @author Jose
+ * @author Jose, Silvia, Llorenç
  */
 public class Llistats {
     String nom, cognom, DNI, telefon, puntuacio, capcalera, mostrarDades
